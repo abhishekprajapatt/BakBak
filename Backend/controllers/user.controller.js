@@ -127,17 +127,20 @@ export const getOtherUsers = async (req, res) => {
     const otherUsers = await User.find({ _id: { $ne: loggedInUserId } }).select(
       '-password'
     );
+
     if (!otherUsers) {
       return res.status(400).json({
         message: 'users not found',
         success: false,
       });
     }
+
     return res.status(200).json({
       otherUsers,
       message: 'all users',
       success: true,
     });
+    
   } catch (error) {
     console.log(error);
     return res.status(500).json({
